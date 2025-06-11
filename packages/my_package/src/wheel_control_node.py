@@ -16,10 +16,10 @@ DIRECTION_LEFT = 1         # forward
 THROTTLE_RIGHT = 0.75       # 30% throttle
 DIRECTION_RIGHT = 1       # backward
 
-CONST = 0.3
-GAIN = 0.4
-LEFT = 0.2
-RIGHT = 0.2
+CONST = 0.4  # Increased base speed to overcome friction
+GAIN = 0.8   # Doubled gain for more responsive turning
+LEFT = 0.4   # Doubled left sensitivity
+RIGHT = 0.4  # Doubled right sensitivity
 
 class WheelControlNode(DTROS):
     def __init__(self, node_name):
@@ -112,21 +112,21 @@ class WheelControlNode(DTROS):
         right_motor = CONST + GAIN * right_non_zero_count * RIGHT
 
         if(left_non_zero_count > right_non_zero_count):
-            right_motor -= 0.2
-            right_motor = 0.2 if right_motor < 0.2 else right_motor
+            right_motor -= 0.3  # Increased from 0.2 for stronger right turn
+            right_motor = 0.15 if right_motor < 0.15 else right_motor  # Lower minimum for sharper turns
 
-            left_motor += 0.25
-            left_motor = 0.45 if left_motor > 0.45 else left_motor
+            left_motor += 0.4  # Increased from 0.25 for stronger right turn
+            left_motor = 0.7 if left_motor > 0.7 else left_motor  # Higher maximum for stronger turns
 
             message = WheelsCmdStamped(vel_left=left_motor, vel_right=right_motor)
             self._publisher.publish(message)
 
         elif(left_non_zero_count < right_non_zero_count):
-            left_motor -= 0.2
-            left_motor = 0.2 if left_motor < 0.2 else left_motor
+            left_motor -= 0.3  # Increased from 0.2 for stronger left turn
+            left_motor = 0.15 if left_motor < 0.15 else left_motor  # Lower minimum for sharper turns
 
-            right_motor += 0.25
-            right_motor = 0.45 if right_motor > 0.45 else right_motor
+            right_motor += 0.4  # Increased from 0.25 for stronger left turn
+            right_motor = 0.7 if right_motor > 0.7 else right_motor  # Higher maximum for stronger turns
 
             message = WheelsCmdStamped(vel_left=left_motor, vel_right=right_motor)
             self._publisher.publish(message)   
@@ -155,9 +155,6 @@ class WheelControlNode(DTROS):
 
 if __name__ == '__main__':
 
-    # create the node
     node = WheelControlNode(node_name='wheel_control_node')
-    # run node
-    # node.run()
-    # keep the process from terminating
+    node.run()
     rospy.spin()

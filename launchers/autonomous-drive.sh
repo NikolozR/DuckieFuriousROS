@@ -11,7 +11,7 @@ rosrun my_package camera_reader_node.py &
 rosrun my_package wheel_encoder_reader_node.py &
 
 # Step 3: Launch lane following (base driving behavior)
-rosrun my_package twist_control_node.py &
+rosrun my_package wheel_control_node.py &
 
 # Step 4: Launch traffic sign detection (overrides velocity when signs detected)
 rosrun my_package traffic_sign_node.py &
