@@ -116,7 +116,7 @@ class WheelControlNode(DTROS):
             right_motor = 0.15 if right_motor < 0.15 else right_motor  # Lower minimum for sharper turns
 
             left_motor += 0.4  # Increased from 0.25 for stronger right turn
-            left_motor = 0.7 if left_motor > 0.7 else left_motor  # Higher maximum for stronger turns
+            left_motor = 0.4 if left_motor > 0.4 else left_motor  # Higher maximum for stronger turns
 
             message = WheelsCmdStamped(vel_left=left_motor, vel_right=right_motor)
             self._publisher.publish(message)
@@ -126,7 +126,7 @@ class WheelControlNode(DTROS):
             left_motor = 0.15 if left_motor < 0.15 else left_motor  # Lower minimum for sharper turns
 
             right_motor += 0.4  # Increased from 0.25 for stronger left turn
-            right_motor = 0.7 if right_motor > 0.7 else right_motor  # Higher maximum for stronger turns
+            right_motor = 0.4 if right_motor > 0.4 else right_motor  # Higher maximum for stronger turns
 
             message = WheelsCmdStamped(vel_left=left_motor, vel_right=right_motor)
             self._publisher.publish(message)   
